@@ -25,8 +25,11 @@ public class RockFactory {
         return randomFactory.generateId();
     }
 
-    private Position getRandomPositionWithin(int lowerLimit, int upperLimit) {
-        return Position.of(randomFactory.generateNumber(0, lowerLimit), randomFactory.generateNumber(0, upperLimit));
+    private Position getRandomPositionWithin(int width, int height) {
+        var margin = 50;
+        var latitude = randomFactory.generateNumber(0, width - margin);
+        var longitude = randomFactory.generateNumber(0, height - margin);
+        return Position.of(latitude, longitude);
     }
 
     private Direction getRandomDirection() {
