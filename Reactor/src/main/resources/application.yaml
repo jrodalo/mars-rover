@@ -1,4 +1,4 @@
 app:
     width: 600
     height: 500
-    initial-number-of-rocks: 10
+    initial-number-of-rocks: 20
