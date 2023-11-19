@@ -1,5 +1,6 @@
 package es.leanmind.marsrover.handlers;
 
+import es.leanmind.marsrover.models.Element;
 import es.leanmind.marsrover.models.Planet;
 import es.leanmind.marsrover.models.Rover;
 import es.leanmind.marsrover.usecases.ApplyActionToRover;
@@ -22,7 +23,7 @@ import reactor.util.annotation.NonNull;
 public class AppWebSocketHandler implements WebSocketHandler {
 
     private final Logger logger = LoggerFactory.getLogger(AppWebSocketHandler.class);
-    private final Sinks.Many<Rover> updatesChannel = Sinks.many().multicast().directBestEffort();
+    private final Sinks.Many<Element> updatesChannel = Sinks.many().multicast().directBestEffort();
     private final GetPlanet getPlanet;
     private final ApplyActionToRover applyActionToRover;
 
@@ -48,12 +49,13 @@ public class AppWebSocketHandler implements WebSocketHandler {
         );
     }
 
-    private Flux<Rover> listenForNewActions(WebSocketSession session) {
+    private Flux<Element> listenForNewActions(WebSocketSession session) {
         return session.receive()
             .map(WebSocketMessage::getPayloadAsText)
             .doOnNext(this::logIncomingMessage)
             .map(this::toAction)
             .flatMap(applyActionToRover::execute)
+            .map(Rover::toElement)
             .doOnNext(updatesChannel::tryEmitNext);
     }
 

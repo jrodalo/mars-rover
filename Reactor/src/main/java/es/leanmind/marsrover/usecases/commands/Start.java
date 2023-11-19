@@ -2,7 +2,7 @@ package es.leanmind.marsrover.usecases.commands;
 
 import es.leanmind.marsrover.models.Rover;
 
-public class Start implements Command {
+public record Start() implements Command {
 
     public static Start command() {
         return new Start();

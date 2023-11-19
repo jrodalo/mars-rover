@@ -2,7 +2,7 @@ package es.leanmind.marsrover.usecases.commands;
 
 import es.leanmind.marsrover.models.Rover;
 
-public class DoNothing implements Command {
+public record DoNothing() implements Command {
 
     public static DoNothing command() {
         return new DoNothing();

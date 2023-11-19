@@ -33,4 +33,8 @@ public record Rover(String id, Position position, Direction direction, Speed spe
         var newDirection = direction.turnRightAt(speed);
         return Rover.create(id, position, newDirection, speed);
     }
+
+    public Element toElement() {
+        return new Element(id, position, direction, Element.Type.ROVER);
+    }
 }

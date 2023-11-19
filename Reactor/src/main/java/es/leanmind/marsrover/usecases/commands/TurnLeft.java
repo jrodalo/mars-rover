@@ -2,7 +2,7 @@ package es.leanmind.marsrover.usecases.commands;
 
 import es.leanmind.marsrover.models.Rover;
 
-public class TurnLeft implements Command {
+public record TurnLeft() implements Command {
 
     public static TurnLeft command() {
         return new TurnLeft();
