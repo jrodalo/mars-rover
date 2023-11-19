@@ -1,39 +1,9 @@
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mars Rover</title>
+</head>
 <body>
-<button onclick="send('TURN_LEFT')">LEFT</button>
-<button onclick="send('MOVE_FORWARD')">UP</button>
-<button onclick="send('MOVE_BACKWARD')">DOWN</button>
-<button onclick="send('TURN_RIGHT')">RIGHT</button>
-
-<div id="messages" style="width: 90%; height: 400px; overflow-y: scroll"></div>
+    <p>The UI is no longer here! - Go to the VueJs folder and follow the instructions.</p>
 </body>
-
-<script>
-    const messageLog = document.getElementById("messages");
-    const marsRoverSocket = new WebSocket("ws://localhost:8080/api/websocket");
-    const roverId = localStorage.getItem("roverId") || crypto.randomUUID();
-    localStorage.setItem("roverId", roverId);
-
-    marsRoverSocket.onmessage = (event) => {
-        messageLog.innerHTML = `<li>${event.data}</li>${messageLog.innerHTML}`;
-    };
-
-    marsRoverSocket.onerror = (error) => {
-        console.error(`[error] ${error.message}`);
-    };
-
-    marsRoverSocket.onopen = () => {
-        marsRoverSocket.send(JSON.stringify({
-            elementId: roverId,
-            command: "START"
-        }));
-    };
-
-    const send = (command) => {
-        marsRoverSocket.send(JSON.stringify({
-            elementId: roverId,
-            command: command
-        }));
-    }
-</script>
 </html>

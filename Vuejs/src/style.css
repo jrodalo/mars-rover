@@ -1,0 +1,12 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 10px;
+    box-sizing: border-box;
+}
