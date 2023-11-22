@@ -38,6 +38,6 @@ class MoveBackwardTest {
 
         var actual = MoveBackward.command().apply(rover);
 
-        assertThat(actual).isEqualTo(rover.atPosition(Position.of(-3, -3)));
+        assertThat(actual).isEqualTo(rover.atPosition(Position.of(-4, -4)));
     }
 }

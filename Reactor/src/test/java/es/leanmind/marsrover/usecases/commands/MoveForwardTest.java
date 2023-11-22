@@ -37,6 +37,6 @@ class MoveForwardTest {
 
         var actual = MoveForward.command().apply(rover);
 
-        assertThat(actual).isEqualTo(rover.atPosition(Position.of(3, 3)));
+        assertThat(actual).isEqualTo(rover.atPosition(Position.of(4, 4)));
     }
 }
