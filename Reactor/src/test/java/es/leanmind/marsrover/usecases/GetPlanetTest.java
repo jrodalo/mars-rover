@@ -8,12 +8,18 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class GetPlanetTest {
+
+    private static final Rock FIRST_ROCK = Rock.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90));
+    private static final Rock SECOND_ROCK = Rock.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90));
+    private static final Rover FIRST_ROVER = Rover.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90), Speed.of(5));
+    private static final Rover SECOND_ROVER = Rover.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90), Speed.of(5));
 
     @Test
     void returns_all_the_existing_elements_in_the_planet() {
@@ -22,12 +28,12 @@ class GetPlanetTest {
         var getPlanet = new GetPlanet(roverRepository, rockRepository);
         var expected = Planet.of(
             List.of(
-                Rover.create("1", Position.of(0, 0), Direction.of(90), Speed.of(5)),
-                Rover.create("2", Position.of(0, 0), Direction.of(90), Speed.of(5))
+                FIRST_ROVER,
+                SECOND_ROVER
             ),
             List.of(
-                Rock.create("3", Position.of(0, 0), Direction.of(90)),
-                Rock.create("4", Position.of(0, 0), Direction.of(90))
+                FIRST_ROCK,
+                SECOND_ROCK
             )
         );
 
@@ -40,8 +46,8 @@ class GetPlanetTest {
     private RoverRepository fakeRoverRepository() {
         var roverRepository = mock(RoverRepository.class);
         when(roverRepository.findAll()).thenReturn(Mono.just(List.of(
-            Rover.create("1", Position.of(0, 0), Direction.of(90), Speed.of(5)),
-            Rover.create("2", Position.of(0, 0), Direction.of(90), Speed.of(5))
+            FIRST_ROVER,
+            SECOND_ROVER
         )));
         return roverRepository;
     }
@@ -49,8 +55,8 @@ class GetPlanetTest {
     private RockRepository fakeRockRepository() {
         var rockRepository = mock(RockRepository.class);
         when(rockRepository.findAll()).thenReturn(Mono.just(List.of(
-            Rock.create("3", Position.of(0, 0), Direction.of(90)),
-            Rock.create("4", Position.of(0, 0), Direction.of(90))
+            FIRST_ROCK,
+            SECOND_ROCK
         )));
         return rockRepository;
     }

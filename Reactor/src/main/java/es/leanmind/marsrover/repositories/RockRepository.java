@@ -6,11 +6,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class RockRepository {
-    private final Map<String, Rock> database = new ConcurrentHashMap<>();
+    private final Map<UUID, Rock> database = new ConcurrentHashMap<>();
 
     public Mono<Rock> save(Rock rock) {
         return Mono.just(rock)

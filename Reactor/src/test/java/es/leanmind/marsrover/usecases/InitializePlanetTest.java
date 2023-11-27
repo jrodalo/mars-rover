@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +39,7 @@ class InitializePlanetTest {
 
     private RockFactory fakeRockFactory() {
         var rockFactory = mock(RockFactory.class);
-        when(rockFactory.newRockAtRandomPosition()).thenReturn(Rock.create("1", Position.of(0, 0), Direction.of(90)));
+        when(rockFactory.newRockAtRandomPosition()).thenReturn(Rock.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90)));
         return rockFactory;
     }
 }

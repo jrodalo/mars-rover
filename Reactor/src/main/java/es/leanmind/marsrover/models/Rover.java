@@ -1,8 +1,10 @@
 package es.leanmind.marsrover.models;
 
-public record Rover(String id, Position position, Direction direction, Speed speed) {
+import java.util.UUID;
 
-    public static Rover create(String id, Position position, Direction direction, Speed speed) {
+public record Rover(UUID id, Position position, Direction direction, Speed speed) {
+
+    public static Rover create(UUID id, Position position, Direction direction, Speed speed) {
         return new Rover(id, position, direction, speed);
     }
 

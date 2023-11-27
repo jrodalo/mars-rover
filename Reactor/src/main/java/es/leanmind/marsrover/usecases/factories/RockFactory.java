@@ -7,6 +7,8 @@ import es.leanmind.marsrover.models.Rock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class RockFactory {
@@ -21,7 +23,7 @@ public class RockFactory {
         return Rock.create(id, position, direction);
     }
 
-    private String getRandomId() {
+    private UUID getRandomId() {
         return randomFactory.generateId();
     }
 

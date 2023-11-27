@@ -6,13 +6,15 @@ import es.leanmind.marsrover.models.Rover;
 import es.leanmind.marsrover.models.Speed;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TurnRightTest {
 
     @Test
     void increments_angle_when_turning_right() {
-        var rover = Rover.create("1", Position.of(0, 0), Direction.of(0), Speed.of(5));
+        var rover = Rover.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(0), Speed.of(5));
 
         var actual = TurnRight.command().apply(rover);
 

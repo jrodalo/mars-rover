@@ -6,6 +6,8 @@ import es.leanmind.marsrover.models.Rover;
 import es.leanmind.marsrover.models.Speed;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MoveBackwardTest {
@@ -16,7 +18,7 @@ class MoveBackwardTest {
 
     @Test
     void decrements_latitude_when_moving_backward_horizontally() {
-        var rover = Rover.create("1", Position.of(0, 0), EAST, Speed.of(5));
+        var rover = Rover.create(UUID.randomUUID(), Position.of(0, 0), EAST, Speed.of(5));
 
         var actual = MoveBackward.command().apply(rover);
 
@@ -25,7 +27,7 @@ class MoveBackwardTest {
 
     @Test
     void decrements_longitude_when_moving_backward_vertically() {
-        var rover = Rover.create("1", Position.of(0, 0), NORTH, Speed.of(5));
+        var rover = Rover.create(UUID.randomUUID(), Position.of(0, 0), NORTH, Speed.of(5));
 
         var actual = MoveBackward.command().apply(rover);
 
@@ -34,7 +36,7 @@ class MoveBackwardTest {
 
     @Test
     void decrements_latitude_and_longitude_when_moving_backward_diagonally() {
-        var rover = Rover.create("1", Position.of(0, 0), NORTH_EAST, Speed.of(5));
+        var rover = Rover.create(UUID.randomUUID(), Position.of(0, 0), NORTH_EAST, Speed.of(5));
 
         var actual = MoveBackward.command().apply(rover);
 

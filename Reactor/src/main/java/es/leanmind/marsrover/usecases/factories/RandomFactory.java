@@ -13,7 +13,7 @@ public class RandomFactory {
         return randomNumberGenerator.nextInt(lowerLimit, upperLimit);
     }
 
-    public String generateId() {
-        return UUID.randomUUID().toString();
+    public UUID generateId() {
+        return UUID.randomUUID();
     }
 }

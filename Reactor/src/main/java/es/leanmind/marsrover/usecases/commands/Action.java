@@ -1,8 +1,10 @@
 package es.leanmind.marsrover.usecases.commands;
 
-public record Action(CommandType command, String elementId) {
+import java.util.UUID;
 
-    public static Action of(CommandType commandType, String elementId) {
+public record Action(CommandType command, UUID elementId) {
+
+    public static Action of(CommandType commandType, UUID elementId) {
         return new Action(commandType, elementId);
     }
 }

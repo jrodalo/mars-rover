@@ -14,13 +14,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class ApplyActionToRoverTest {
 
-    private static final Rover EXISTING_ROVER = Rover.create("AN_ID", Position.of(0, 0), Direction.of(90), Speed.of(10));
+    private static final Rover EXISTING_ROVER = Rover.create(UUID.randomUUID(), Position.of(0, 0), Direction.of(90), Speed.of(10));
 
     @ParameterizedTest
     @CsvSource(value = {
@@ -67,9 +69,10 @@ class ApplyActionToRoverTest {
         var roverRepository = fakeRoverRepository();
         var fakeRoverFactory = fakeRoverFactory();
         var applyActionToRover = new ApplyActionToRover(roverRepository, fakeRoverFactory);
-        var expectedRover = Rover.create("NEW_ROVER_ID", Position.of(0, 0), Direction.of(90), Speed.of(10));
+        var newRoverId = UUID.randomUUID();
+        var expectedRover = Rover.create(newRoverId, Position.of(0, 0), Direction.of(90), Speed.of(10));
 
-        applyActionToRover.execute(Action.of(CommandType.START, "NEW_ROVER_ID"))
+        applyActionToRover.execute(Action.of(CommandType.START, newRoverId))
             .as(StepVerifier::create)
             .assertNext(actualRover -> assertEquals(expectedRover, actualRover))
             .verifyComplete();
@@ -93,13 +96,13 @@ class ApplyActionToRoverTest {
         var rockRepository = mock(RoverRepository.class);
         when(rockRepository.save(any(Rover.class))).thenAnswer(invocation -> Mono.just(invocation.getArgument(0)));
         when(rockRepository.findById(EXISTING_ROVER.id())).thenReturn(Mono.just(EXISTING_ROVER));
-        when(rockRepository.findById(anyString())).thenReturn(Mono.empty());
+        when(rockRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
         return rockRepository;
     }
 
     private RoverFactory fakeRoverFactory() {
         var roverFactory = mock(RoverFactory.class);
-        when(roverFactory.newRoverWith(anyString()))
+        when(roverFactory.newRoverWith(any(UUID.class)))
             .thenAnswer(invocation -> Rover.create(invocation.getArgument(0), Position.of(0, 0), Direction.of(90), Speed.of(10)));
         return roverFactory;
     }

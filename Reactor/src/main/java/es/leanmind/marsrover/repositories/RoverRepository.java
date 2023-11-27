@@ -6,11 +6,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class RoverRepository {
-    private final Map<String, Rover> database = new ConcurrentHashMap<>();
+    private final Map<UUID, Rover> database = new ConcurrentHashMap<>();
 
     public Mono<Rover> save(Rover rover) {
         return Mono.just(rover)
@@ -18,7 +19,7 @@ public class RoverRepository {
             .thenReturn(rover);
     }
 
-    public Mono<Rover> findById(String id) {
+    public Mono<Rover> findById(UUID id) {
         return Mono.justOrEmpty(database.get(id));
     }
 

@@ -22,6 +22,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.stream.IntStream;
@@ -54,8 +55,10 @@ class AppWebSocketHandlerTest {
     @Test
     void sends_existing_elements_to_the_client_when_connecting_for_the_first_time() throws Exception {
         var messages = new Messages();
-        var startFirstRover = actionAsJson(CommandType.START, "first-rover-id");
-        var startSecondRover = actionAsJson(CommandType.START, "second-rover-id");
+        var firstRoverId = UUID.randomUUID();
+        var startFirstRover = actionAsJson(CommandType.START, firstRoverId);
+        var secondRoverId = UUID.randomUUID();
+        var startSecondRover = actionAsJson(CommandType.START, secondRoverId);
 
         webSocket(session -> session.send(Mono.just(startFirstRover).map(session::textMessage))).block();
         webSocket(session -> session.send(Mono.just(startSecondRover).map(session::textMessage))).block();
@@ -69,7 +72,7 @@ class AppWebSocketHandlerTest {
             .then())
             .block();
 
-        assertThat(messages.get()).contains(aRoverWith("first-rover-id"), aRoverWith("second-rover-id"));
+        assertThat(messages.get()).contains(aRoverWith(firstRoverId), aRoverWith(secondRoverId));
     }
 
     private Mono<Void> webSocket(WebSocketHandler webSocketHandler) throws URISyntaxException {
@@ -77,11 +80,11 @@ class AppWebSocketHandlerTest {
         return webSocketClient.execute(uri, webSocketHandler);
     }
 
-    private String actionAsJson(CommandType commandType, String elementId) throws JsonProcessingException {
+    private String actionAsJson(CommandType commandType, UUID elementId) throws JsonProcessingException {
         return Json.from(Action.of(commandType, elementId));
     }
 
-    private static Element aRoverWith(String id) {
+    private static Element aRoverWith(UUID id) {
         return new Element(
             id,
             Position.of(A_FIXED_NUMBER, A_FIXED_NUMBER),

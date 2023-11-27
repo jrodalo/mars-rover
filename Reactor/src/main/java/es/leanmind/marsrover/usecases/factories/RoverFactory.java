@@ -8,13 +8,15 @@ import es.leanmind.marsrover.models.Speed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class RoverFactory {
     private final AppConfiguration appConfiguration;
     private final RandomFactory randomFactory;
 
-    public Rover newRoverWith(String id) {
+    public Rover newRoverWith(UUID id) {
         var position = getRandomPositionWithin(appConfiguration.width(), appConfiguration.height());
         var direction = getRandomDirection();
         var speed = getRandomSpeed();
